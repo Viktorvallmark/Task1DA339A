@@ -168,6 +168,7 @@ public class DA339A_U1 {
    * @param newName The new name of the guest at place given by index.
    */
   public static void changeNameOfGuest(int index, String newName) {
+    // TODO: Changing name adds new guest when it shouldnt
     if (index <= 10) {
       if (!(guestList[index][0].equals("")) || !(guestList[index][0].equals(null))) {
         guestList[index][0] = newName;
@@ -195,6 +196,7 @@ public class DA339A_U1 {
    * @param newAge The new age, as a String, of the guest at place given by index.
    */
   public static void changeAgeOfGuest(int index, String newAge) {
+    // TODO: Changing age makes new guest when it shouldnt
     System.out.println("You chose to change the age of a guest");
     if (index <= 10) {
       if (!(guestList[index][1].equals("")) || !(guestList[index][1].equals(null))) {
@@ -244,6 +246,7 @@ public class DA339A_U1 {
    * @param index2 Second index involved in the change of places
    */
   public static void changePlaces(int index1, int index2) {
+    // TODO:
     System.out.println("You chose to switch places between index " + index1 + " and " + index2);
     String tempName;
     String tempAge;
@@ -341,6 +344,8 @@ public class DA339A_U1 {
           }
           break;
         case 5:
+          // TODO: Check Scanner hasNext(); in a while loop
+
           System.out.println("You chose to change the name of a guest\n");
           System.out.println("Please enter the guests place in the guest list: ");
           choice2 = input.nextInt();
@@ -357,14 +362,19 @@ public class DA339A_U1 {
           break;
         case 6:
           // TODO: Check choice1 and choice2 for non-int so that the program doesnt crash
+          // TODO: check Scanner hasNextInt(); in a while loop
+
           System.out.println("Please enter the place of the guest you want to change the age on: ");
           choice1 = input.nextInt();
           System.out.println("Please enter the new age of the guest: ");
           choice2 = input.nextInt();
+
           changeAgeOfGuest(choice1, String.valueOf(choice2));
           break;
         case 7:
           // TODO: Check input for non-ints
+          //
+          // TODO: check Scanner hasNextInt(); in a while loop
           System.out.println("You chose to remove a guest");
           System.out.println("Enter the place of the guest to remove: ");
           choice1 = input.nextInt();
@@ -372,7 +382,7 @@ public class DA339A_U1 {
           break;
         case 8:
           // TODO: Check choice1 and choice2 for non-int so that the program doesnt crash
-
+          // TODO: check Scanner hasNextInt(); in a while loop
           System.out.println("Please enter the place of the first guest: ");
           choice1 = input.nextInt();
           System.out.println("Please enter the place of the second guest: ");

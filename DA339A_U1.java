@@ -60,13 +60,15 @@ public class DA339A_U1 {
    * representing the place in the guest list is shown.
    */
   public static void printGuestList() {
-    System.out.println("You chose to print the guest list");
-    printGuestInformation();
     for (int i = 0; i < guestList.length; i++) {
 
       if ((guestList[i][0].equals("")) || (guestList[i][0].equals(null))) {
 
         System.out.println("This spot is empty!");
+      } else {
+
+        System.out.println(
+            "Name: " + guestList[i][0] + " Age: " + guestList[i][1] + " Place in guest list: " + i);
       }
     }
   }
@@ -144,7 +146,6 @@ public class DA339A_U1 {
    * @param age  The age of the guest to add as a String
    */
   public static void addGuest(String name, String age) {
-    System.out.println("You chose to add a guest");
     for (int i = 0; i < guestList.length; i++) {
       if (guestList[i][0].equals("") || guestList[i][0].equals(null)) {
         guestList[i][0] = name;
@@ -168,15 +169,16 @@ public class DA339A_U1 {
    * @param newName The new name of the guest at place given by index.
    */
   public static void changeNameOfGuest(int index, String newName) {
-    // TODO: Changing name adds new guest when it shouldnt
     if (index <= 10) {
-      if (!(guestList[index][0].equals("")) || !(guestList[index][0].equals(null))) {
-        guestList[index][0] = newName;
-      } else {
+      if ((guestList[index][0].equals("")) || (guestList[index][0].equals(null))) {
 
         System.out.println("No guest can be found at this position in the guest list.");
+      } else {
+
+        guestList[index][0] = newName;
+
+        System.out.println("Name of guest at place " + index + " has been changed to " + newName);
       }
-      System.out.println("Name of guest at place " + index + " has been changed to " + newName);
     } else {
       System.out.println(
           "The guest list can only contain 10 people so specify a number between 0-9.");
@@ -196,15 +198,16 @@ public class DA339A_U1 {
    * @param newAge The new age, as a String, of the guest at place given by index.
    */
   public static void changeAgeOfGuest(int index, String newAge) {
-    // TODO: Changing age makes new guest when it shouldnt
     System.out.println("You chose to change the age of a guest");
     if (index <= 10) {
-      if (!(guestList[index][1].equals("")) || !(guestList[index][1].equals(null))) {
-        guestList[index][1] = newAge;
-      } else {
+      if ((guestList[index][1].equals("")) || (guestList[index][1].equals(null))) {
         System.out.println("No guest can be found at this position in the guest list.");
+      } else {
+
+        guestList[index][1] = newAge;
+
+        System.out.println("Age of guest at place " + index + " has been changed to " + newAge);
       }
-      System.out.println("Age of guest at place " + index + " has been changed to " + newAge);
     } else {
 
       System.out.println("The guest list can only contain 10 people");
@@ -222,12 +225,15 @@ public class DA339A_U1 {
    */
   public static void removeGuest(int index) {
 
-    if (!(guestList[index][0].equals("")) || !(guestList[index][0].equals(null))) {
+    if ((guestList[index][0].equals("")) || (guestList[index][0].equals(null))) {
+
+      System.out.println("No guest can be found at this position in the guest list.");
+
+    } else {
+
       guestList[index][0] = "";
       guestList[index][1] = "";
       System.out.println("Guest with place " + index + " has been removed from the guest list");
-    } else {
-      System.out.println("No guest can be found at this position in the guest list.");
     }
   }
 
@@ -246,8 +252,6 @@ public class DA339A_U1 {
    * @param index2 Second index involved in the change of places
    */
   public static void changePlaces(int index1, int index2) {
-    // TODO:
-    System.out.println("You chose to switch places between index " + index1 + " and " + index2);
     String tempName;
     String tempAge;
     if ((index1 <= 10) && (index2 <= 10)) {
@@ -311,9 +315,8 @@ public class DA339A_U1 {
 
     System.out.println("Welcome to the guest list to the GIGA party!\n");
 
-    int choice2;
-    String stringInput;
-    boolean compare;
+    String stringInput, stringNumInput;
+    boolean compare, compareNum;
 
     for (;;) {
       int choice1 = readMenuChoice();
@@ -333,61 +336,108 @@ public class DA339A_U1 {
           stringInput = input.next();
           compare = Pattern.matches("^[a-zA-ZåäöÅÄÖ]+$", stringInput);
           if ((stringInput.equals("")) || (stringInput.equals(null))) {
-            System.out.println("Please enter a name");
+            System.out.println("Please enter a name\n");
           } else if (compare) {
             System.out.println("Please enter an age for the guest: ");
-            choice1 = input.nextInt();
-            addGuest(stringInput, String.valueOf(choice1));
+
+            stringNumInput = input.next();
+            compareNum = Pattern.matches("^[0-9]+$", stringNumInput);
+            if (compareNum) {
+              addGuest(stringInput, String.valueOf(stringNumInput));
+            } else {
+              System.out.println("Please use only integers\n");
+            }
           } else {
-            System.out.println("Please use only letters and no numbers");
+            System.out.println("Please use letters only\n");
             break;
           }
           break;
         case 5:
-          // TODO: Check Scanner hasNext(); in a while loop
-
           System.out.println("You chose to change the name of a guest\n");
           System.out.println("Please enter the guests place in the guest list: ");
-          choice2 = input.nextInt();
-          System.out.println("Please enter a new name: ");
-          stringInput = input.next();
-          compare = Pattern.matches("^[a-zA-ZåäöÅÄÖ]+$", stringInput);
-          if ((stringInput.equals("")) || (stringInput.equals(null))) {
-            System.out.println("Please enter a name");
-          } else if (compare) {
-            changeNameOfGuest(choice2, stringInput);
+          stringNumInput = input.next();
+          compareNum = Pattern.matches("^[0-9]+$", stringNumInput);
+          if ((stringNumInput.equals("")) || (stringNumInput.equals(null))) {
+            System.out.println("Please enter an index\n");
+          } else if (compareNum) {
+
+            System.out.println("Please enter a new name: ");
+            stringInput = input.next();
+            compare = Pattern.matches("^[a-zA-ZåäöÅÄÖ]+$", stringInput);
+            if (compare) {
+              changeNameOfGuest(Integer.parseInt(stringNumInput), stringInput);
+            } else {
+
+              System.out.println("Please use letters only\n");
+            }
           } else {
-            System.out.println("Please only use a-ö, A-Ö");
+            // If you want to use swedish letters, be sure to use a terminal emulator that
+            // supports
+            // that.
+
+            System.out.println("Please use integers\n");
           }
           break;
         case 6:
-          // TODO: Check choice1 and choice2 for non-int so that the program doesnt crash
-          // TODO: check Scanner hasNextInt(); in a while loop
-
           System.out.println("Please enter the place of the guest you want to change the age on: ");
-          choice1 = input.nextInt();
-          System.out.println("Please enter the new age of the guest: ");
-          choice2 = input.nextInt();
+          stringNumInput = input.next();
+          compareNum = Pattern.matches("^[0-9]+$", stringNumInput);
+          if ((stringNumInput.equals("")) || (stringNumInput.equals(null))) {
+            System.out.println("Please enter an index\n");
+          } else if (compareNum) {
 
-          changeAgeOfGuest(choice1, String.valueOf(choice2));
+            System.out.println("Please enter the new age of the guest: ");
+            stringInput = input.next();
+            compare = Pattern.matches("^[0-9]+$", stringInput);
+            if (compare) {
+
+              System.out.println("You have changed age on guest at place " + stringNumInput);
+              changeAgeOfGuest(Integer.parseInt(stringNumInput), stringInput);
+            } else {
+              System.out.println("Please use integers to specify age");
+            }
+          } else {
+            System.out.println("Please use integers\n");
+          }
+
           break;
         case 7:
-          // TODO: Check input for non-ints
-          //
-          // TODO: check Scanner hasNextInt(); in a while loop
-          System.out.println("You chose to remove a guest");
+          System.out.println("You chose to remove a guest\n");
           System.out.println("Enter the place of the guest to remove: ");
-          choice1 = input.nextInt();
-          removeGuest(choice1);
+          stringNumInput = input.next();
+
+          compareNum = Pattern.matches("^[0-9]+$", stringNumInput);
+          if ((stringNumInput.equals("")) || (stringNumInput.equals(null))) {
+            System.out.println("Please enter an index");
+          } else if (compareNum) {
+            removeGuest(Integer.parseInt(stringNumInput));
+          } else {
+            System.out.println("Please use integers\n");
+          }
           break;
         case 8:
-          // TODO: Check choice1 and choice2 for non-int so that the program doesnt crash
-          // TODO: check Scanner hasNextInt(); in a while loop
+          System.out.println("You chose to switch places on two guests\n");
           System.out.println("Please enter the place of the first guest: ");
-          choice1 = input.nextInt();
-          System.out.println("Please enter the place of the second guest: ");
-          choice2 = input.nextInt();
-          changePlaces(choice1, choice2);
+          stringNumInput = input.next();
+          compareNum = Pattern.matches("^[0-9]+$", stringNumInput);
+
+          if ((stringNumInput.equals("")) || (stringNumInput.equals(null))) {
+            System.out.println("Please enter an index");
+          } else if (compareNum) {
+
+            System.out.println("Please enter the place of the second guest: ");
+            stringInput = input.next();
+            compare = Pattern.matches("^[0-9]+$", stringInput);
+            if (compare) {
+
+              changePlaces(Integer.parseInt(stringNumInput), Integer.parseInt(stringInput));
+            } else {
+
+              System.out.println("Please use integers\n");
+            }
+          } else {
+            System.out.println("Please use integers\n");
+          }
           break;
         default:
           break;
